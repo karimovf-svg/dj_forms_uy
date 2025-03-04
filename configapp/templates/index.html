@@ -69,7 +69,13 @@
                                     <h5 class="card-title">{{ item.full_name }}</h5>
                                     <p class="card-text mt-2">{{ item.address }}</p>
                                     <p class="card-text mt-2">{{ item.phone_number }}</p>
-                                    <a href="{% url 'download_student_pdf' item.id %}" class="btn btn-primary mt-4">Yuklab Olish</a>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="{% url 'download_student_pdf' item.id %}" class="btn btn-primary">Yuklab Olish</a>
+                                        <form action="{% url 'student_del' item.id %}" method="post">
+                                         {% csrf_token %}
+                                         <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
                                 </div>
                                 <div class="card-footer text-muted">
                                     {{ item.created_at }}

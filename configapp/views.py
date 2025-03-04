@@ -2,6 +2,7 @@ import qrcode
 from io import BytesIO
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.urls import reverse
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.utils import ImageReader
@@ -51,6 +52,11 @@ def add_student(request):
         form = StudentForm()
     return render(request, 'add_student.html', {'form': form})
 
+def student_del(request, student_id):
+    if request.method == 'POST':
+        student = get_object_or_404(Student, id=student_id)
+        student.delete()
+        return redirect(reverse('home'))
 
 def generate_student_pdf(request, student_id):
     student = get_object_or_404(Student, id=student_id)
